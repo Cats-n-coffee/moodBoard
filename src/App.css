@@ -1,0 +1,32 @@
+.container {
+  display: grid;
+  grid-template-columns: 50px auto;
+  grid-template-rows: 50px auto;
+  grid-template-areas: 'topbar topbar'
+                       'sidebar board';
+}
+
+.topbar-wrapper {
+  grid-area: topbar;
+  background-color: aquamarine;
+}
+
+.sidebar-wrapper {
+  grid-area: sidebar;
+  background-color: aqua;
+}
+
+.board-wrapper {
+  grid-area: board;
+}
+
+.board-wrapper h2 {
+  background-color: aliceblue;
+}
+
+.card-wrapper {
+  width: 250px;
+  height: 300px;
+  background-color: lightcyan;
+  border: 1px solid lightcoral;
+}
