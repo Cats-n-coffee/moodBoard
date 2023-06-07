@@ -1,4 +1,5 @@
 .container {
+  height: 100vh;
   display: grid;
   grid-template-columns: 50px auto;
   grid-template-rows: 50px auto;
@@ -24,9 +25,16 @@
   background-color: aliceblue;
 }
 
+.board-cards-area {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 .card-wrapper {
-  width: 250px;
-  height: 300px;
+  width: 100px;
+  height: 150px;
   background-color: lightcyan;
   border: 1px solid lightcoral;
+  position: absolute;
 }
