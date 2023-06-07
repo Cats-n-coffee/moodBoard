@@ -9,4 +9,9 @@ html, body {
 
 #root {
     height: 100vh;
+    --topbar-bg: rgb(177, 208, 249);
+    --sidebar-bg: rgb(201, 213, 230);
+    --board-bg: rgb(237, 240, 244);
+    --card-bg: rgb(249, 251, 252);
+    --card-border: rgba(134, 159, 193, 0.2);
 }
