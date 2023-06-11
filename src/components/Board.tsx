@@ -1,17 +1,18 @@
-import { useState, useRef } from 'react';
-import * as _ from 'lodash-es';
+import { useState } from 'react';
+import { CardType } from '../@types/BoardTypes';
 import Card from './Card';
 
 interface BoardProps {
-    cards: string[],
+    cards: CardType[],
+    updateCard: (
+        cardId: string, 
+        keyToUpdate: string,
+        newValue: string | { x: number, y: number} | { top: number, left: number}
+    ) => void,
 }
 
-const Board : React.FC<BoardProps> = ({ cards }) => {
-    const board = useRef<HTMLDivElement>(null);
-    // Initialize at drag start (start)
-    const [mousePosOnElement, setMousePosOnElement] = useState({ x: 0, y: 0 });
-    // Set position on drop (end)
-    const [elementPos, setElementPos] = useState({ top: '0px', left: '0px'});
+const Board : React.FC<BoardProps> = ({ cards, updateCard }) => {
+    const [cardBeingMoved, setCardBeingMoved] = useState(''); // cardId
 
     const boardXOffset = 50;
     const boardYOffset = 100;
@@ -24,13 +25,7 @@ const Board : React.FC<BoardProps> = ({ cards }) => {
         const mouseXPos = event.pageX - boardXOffset;
         const mouseYPos = event.pageY - boardYOffset;
 
-        const newCoordX = mouseXPos - mousePosOnElement.x;
-        const newCoordY = mouseYPos - mousePosOnElement.y;
- 
-        setElementPos({
-            top: `${newCoordY}px`,
-            left: `${newCoordX}px`,
-        })
+        updateCard(cardBeingMoved, 'cardPosition', { top: mouseYPos, left: mouseXPos});
     }
 
     const onDragEnter = (event: React.DragEvent<HTMLDivElement>) => {
@@ -46,7 +41,6 @@ const Board : React.FC<BoardProps> = ({ cards }) => {
             <h2>Board</h2>
             <div
                 className='board-cards-area'
-                ref={board}
                 onDragOver={onDragOver}
                 onDragEnter={onDragEnter}
                 onDragLeave={onDragLeave}
@@ -54,13 +48,12 @@ const Board : React.FC<BoardProps> = ({ cards }) => {
             >
                 {
                 cards.map(
-                    (card, idx) => (
+                    (card) => (
                             <Card
-                                cardName={card}
-                                key={idx}
-                                cardId={idx}
-                                setMousePosOnElement={setMousePosOnElement}
-                                elementPos={elementPos}
+                                cardInfo={card}
+                                key={card.cardId}
+                                setCardBeingMoved={setCardBeingMoved}
+                                updateCard={updateCard}
                             />
                         )
                     )
